@@ -77,17 +77,15 @@ def to_camel_case(underscore_str):
             >>> tp2.to_camel_case(underscore_str3)
             "alreadyCamel"
     """
-    if underscore_str.count('_') == 0: return underscore_str
+    if underscore_str.count('_') == 0: return underscore_str;
+    camelcase_str = underscore_str.lower()
+    camelcase_str = camelcase_str.split('_')
+    camelcase_str = filter(lambda x : x != '', camelcase_str)
+    result = ''
+    for idx, x in enumerate(camelcase_str):
+        if idx == 0:
+            result += x.lower()
+        else:
+            result += x.title()
 
-    import re
-    reg = '_{2,}'
-    camelcase_str = ''
-    for x in re.sub(reg, '_', underscore_str).split('_'):
-        camelcase_str += x.title()
-    if len(camelcase_str) > 1:
-        camelcase_str = camelcase_str[0].lower() + camelcase_str[1:]
-    elif len(camelcase_str) == 1:
-        camelcase_str = camelcase_str[0].lower()
-    else:
-        camelcase_str = ''
-    return camelcase_str
+    return result
